@@ -15,11 +15,26 @@ int main() {
   dlist->add_right("c", "c");
   dlist->add_right("d", "d");
   dlist->add_right("e", "e");
-  // should be bacde
   dlwalk->rewind();
   while((item = dlwalk->next())) {
     cout<<item->key;
   }
+  // should be bacde
+  cout<<endl;
+  while((item = dlist->pop_left())) {
+    cout<<item->key;
+  }
+  // should be bacde
+  cout<<endl;
+  dlist->add_left("a", "a");
+  dlist->add_left("b", "b");
+  dlist->add_right("c", "c");
+  dlist->add_right("d", "d");
+  dlist->add_right("e", "e");
+  while((item = dlist->pop_right())) {
+    cout<<item->key;
+  }
+  // should be edcab
   cout<<endl;
   delete dlwalk;
   delete dlist;

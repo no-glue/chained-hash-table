@@ -9,6 +9,22 @@ public:
     // add to the right side of list
     add_right(key, value, head, tail);
   }
+  Node * get_left() {
+    // get left
+    return head;
+  }
+  Node * get_right() {
+    // get right
+    return tail;
+  }
+  Node * pop_left() {
+    // pop left
+    return pop_left(head, tail);
+  }
+  Node * pop_right() {
+    // pop right
+    return pop_right(head, tail);
+  }
   Node * get_head() {return head;}
   Node * get_tail() {return tail;}
 private:
@@ -35,5 +51,19 @@ private:
     tail->right = inserted;
     inserted->left = tail;
     tail = inserted;
+  }
+  Node * pop_left(Node * & head, Node * & tail) {
+    // pop left
+    Node * item = head;
+    if(head) head = head->right;
+    else head = tail = NULL;
+    return item;
+  }
+  Node * pop_right(Node * & head, Node * & tail) {
+    // pop right
+    Node * item = tail;
+    if(tail) tail = tail->left;
+    else head = tail = NULL;
+    return item;
   }
 };

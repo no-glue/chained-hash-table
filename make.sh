@@ -1,0 +1,1 @@
+g++ -Wall -W -fpermissive -std=c++11 double_list.cpp -o double_list
