@@ -9,14 +9,6 @@ public:
     // add to the right side of list
     add_right(key, value, head, tail);
   }
-  Node * get_left() {
-    // get left
-    return head;
-  }
-  Node * get_right() {
-    // get right
-    return tail;
-  }
   Node * pop_left() {
     // pop left
     return pop_left(head, tail);
