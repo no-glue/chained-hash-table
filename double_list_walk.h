@@ -17,10 +17,10 @@ private:
     // start from head
     position = list->get_head();
   }
-  Node * next() {
+  Node * next(Node * & position) {
     // get next item
     Node * item = position;
     if(position) position = position->right;
     return item;
   }
-}
+};

@@ -1,6 +1,6 @@
 template<class Node, typename Type>class DoubleList {
 public:
-  DobuleList():head(NULL), tail(NULL) {}
+  DoubleList():head(NULL), tail(NULL) {}
   void add_left(Type key, Type value) {
     // add to the left side of list
     add_left(key, value, head, tail);
