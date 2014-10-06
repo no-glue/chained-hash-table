@@ -1,6 +1,39 @@
-template<class Node>class DoubleList {
+template<class Node, typename Type>class DoubleList {
 public:
+  DobuleList():head(NULL), tail(NULL) {}
+  void add_left(Type key, Type value) {
+    // add to the left side of list
+    add_left(key, value, head, tail);
+  }
+  void add_right(Type key, Type value) {
+    // add to the right side of list
+    add_right(key, value, head, tail);
+  }
 private:
   Node * head;
   Node * tail;
+  void add_left(Type key, Type value, Node * & head, Node * & tail) {
+    // add to the left side of the list
+    Node * inserted = new Node(key, value);
+    if(!head && !tail) {
+      head = tail = inserted;
+      return;
+    }
+    Node * tmp = head->next;
+    inserted->next = tmp;
+    inserted->prev = head;
+    head->next = inserted;
+  }
+  void add_right(Type key, Type value, Node * & head, Node * & tail) {
+    // add to the right side of list
+    Node * inserted = new Node(key, value);
+    if(!head && !tail) {
+      head = tail = inserted;
+      return;
+    }
+    Node * tmp = tail->prev;
+    inserted->prev = tmp;
+    inserted->next = tail;
+    tail->prev = inserted;
+  }
 };
