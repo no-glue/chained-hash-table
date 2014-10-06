@@ -10,13 +10,13 @@ public:
     // add to the right side of list
     add_right(key, value, head, tail);
   }
-  Node * pop_left() {
+  void pop_left() {
     // pop left
-    return pop_left(head, tail);
+    pop_left(head, tail);
   }
-  Node * pop_right() {
+  void pop_right() {
     // pop right
-    return pop_right(head, tail);
+    pop_right(head, tail);
   }
   Node * get_head() {return head;}
   Node * get_tail() {return tail;}
@@ -45,18 +45,34 @@ private:
     inserted->left = tail;
     tail = inserted;
   }
-  Node * pop_left(Node * & head, Node * & tail) {
+  void pop_left(Node * & head, Node * & tail) {
     // pop left
-    Node * item = head;
-    if(head) head = head->right;
-    else head = tail = NULL;
-    return item;
+    if(!head) {
+      head = tail = NULL;
+      return;
+    }
+    if(!head->right) {
+      delete head;
+      head = tail = NULL;
+      return;
+    }
+    head = head->right;
+    delete head->left;
+    head->left = NULL;
   }
-  Node * pop_right(Node * & head, Node * & tail) {
+  void pop_right(Node * & head, Node * & tail) {
     // pop right
-    Node * item = tail;
-    if(tail) tail = tail->left;
-    else head = tail = NULL;
-    return item;
+    if(!tail) {
+      head = tail = NULL;
+      return;
+    }
+    if(!tail->left) {
+      delete tail;
+      head = tail = NULL;
+      return;
+    }
+    tail = tail->left;
+    delete tail->right;
+    tail->right = NULL;
   }
 };

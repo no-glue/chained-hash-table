@@ -21,8 +21,9 @@ int main() {
   }
   // should be bacde
   cout<<endl;
-  while((item = dlist->pop_left())) {
+  while((item = dlist->get_head())) {
     cout<<item->key;
+    dlist->pop_left();
   }
   // should be bacde
   cout<<endl;
@@ -31,8 +32,9 @@ int main() {
   dlist->add_right("c", "c");
   dlist->add_right("d", "d");
   dlist->add_right("e", "e");
-  while((item = dlist->pop_right())) {
+  while((item = dlist->get_tail())) {
     cout<<item->key;
+    dlist->pop_right();
   }
   // should be edcab
   cout<<endl;
