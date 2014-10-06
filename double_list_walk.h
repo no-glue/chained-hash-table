@@ -1,7 +1,7 @@
 template<class Node, class List>class DoubleListWalk {
 public:
-  DoubleListWalk():list(NULL) {}
-  DoubleListWalk(List * list):list(list) {}
+  DoubleListWalk():list(NULL), position(NULL) {}
+  DoubleListWalk(List * list):list(list), position(NULL) {}
   void rewind() {
     // start from head
     rewind(position, list);
