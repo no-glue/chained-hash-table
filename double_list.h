@@ -19,10 +19,9 @@ private:
       head = tail = inserted;
       return;
     }
-    Node * tmp = head->next;
-    inserted->next = tmp;
-    inserted->prev = head;
-    head->next = inserted;
+    head->left = inserted;
+    inserted->right = head;
+    head = inserted;
   }
   void add_right(Type key, Type value, Node * & head, Node * & tail) {
     // add to the right side of list
@@ -31,9 +30,8 @@ private:
       head = tail = inserted;
       return;
     }
-    Node * tmp = tail->prev;
-    inserted->prev = tmp;
-    inserted->next = tail;
-    tail->prev = inserted;
+    tail->right = inserted;
+    inserted->left = tail;
+    tail = inserted;
   }
 };
