@@ -1,4 +1,4 @@
-#define SIZE 65535
+#define SIZE 4294967295
 
 int main() {
   return 0;
