@@ -38,6 +38,11 @@ int main() {
   }
   // should be edcab
   cout<<endl;
+  dlist->insert_left("a", "a");
+  dlist->insert_left("b", "b");
+  dlist->insert_right("c", "c");
+  dlist->insert_right("d", "d");
+  dlist->insert_right("e", "e");
   delete dlwalk;
   delete dlist;
   return 0;

@@ -2,6 +2,7 @@ template<class Node, typename Type>class DoubleList {
 public:
   DoubleList(Type key, Type value):head(NULL), tail(NULL) {insert_right(key, value);}
   DoubleList():head(NULL), tail(NULL) {}
+  ~DoubleList() {make_empty();}
   void insert_left(Type key, Type value) {
     // insert to the left side of list
     insert_left(key, value, head, tail);
@@ -17,6 +18,10 @@ public:
   void pop_right() {
     // pop right
     pop_right(head, tail);
+  }
+  void make_empty() {
+    // make the list empty
+    make_empty(head, tail);
   }
   Node * get_head() {return head;}
   Node * get_tail() {return tail;}
@@ -74,5 +79,9 @@ private:
     tail = tail->left;
     delete tail->right;
     tail->right = NULL;
+  }
+  void make_empty(Node * & head, Node * & tail) {
+    // make the list empty
+    while(head) pop_left(head, tail);
   }
 };
