@@ -27,6 +27,7 @@ private:
   Hash * hash;
   void insert(Type key, Type value, List * & table, Hash * & hash, unsigned int size) {
     // insert key and value to table
+    // todo keep flag to show if there is collision
     unsigned int position = hash->position(key, size);
     if(!table[position]) table[position] = new List(key, value);
     else table[position]->insert_right(key, value);
@@ -49,6 +50,8 @@ private:
   }
   void find(Type key, Node * & table, Walk * & walk, Hash * & hash, unsigned int size, List * & result) {
     // find key and values in table
+    // todo look collision flag
+    // if flag is false just set result
     unsigned int position = hash->position(key, size);
     if(!table[position]) return;
     walk->set_list(table[position]);
