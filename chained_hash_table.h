@@ -18,7 +18,7 @@ public:
   }
   void find(Type key, List * & result) {
     // find key and values in table
-    return find(key, table, walk, hash, size, result);
+    find(key, table, walk, hash, size, result);
   }
 private:
   unsigned int size;
