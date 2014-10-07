@@ -20,6 +20,7 @@ public:
     // find key and values in table
     find(key, table, walk, hash, size, result);
   }
+  unsigned int get_size() {return size;}
 private:
   unsigned int size;
   List * table;

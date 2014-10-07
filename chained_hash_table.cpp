@@ -1,7 +1,9 @@
-#define SIZE 65535
+#define SIZE 4294967295
 
 #include <iostream>
 #include <string>
+#include <math.h>
+#include <iostream>
 #include "double_node.h"
 #include "double_list.h"
 #include "double_list_walk.h"
@@ -24,7 +26,8 @@ int main() {
   HashSimpleString<string>,
   DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
   string
-  >(SIZE, walk, hash);
+  >(ceil(SIZE / sizeof(DoubleList<DoubleNode<string>, string>)), walk, hash);
+  cout<<"table size: "<<table->get_size()<<endl;
   delete walk;
   delete hash;
   delete table;
