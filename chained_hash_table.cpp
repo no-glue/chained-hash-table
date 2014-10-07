@@ -13,6 +13,19 @@ using namespace std;
 int main() {
   DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> > * walk = new DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >();
   HashSimpleString<string> * hash = new HashSimpleString<string>();
+  ChainedHashTable<
+  DoubleNode<string>, 
+  DoubleList<DoubleNode<string>, string>, 
+  HashSimpleString<string>,
+  DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
+  string> * table = new ChainedHashTable<
+  DoubleNode<string>, 
+  DoubleList<DoubleNode<string>, string>, 
+  HashSimpleString<string>,
+  DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
+  string
+  >(SIZE, walk, hash);
+  delete table;
   delete hash;
   delete walk;
   return 0;
