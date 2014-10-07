@@ -2,6 +2,7 @@ template<class Node, class List>class DoubleListWalk {
 public:
   DoubleListWalk():list(NULL), position(NULL) {}
   DoubleListWalk(List * list):list(list), position(NULL) {}
+  void set_list(List * set_list) {list = set_list;}
   void rewind() {
     // start from head
     rewind(position, list);
