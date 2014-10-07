@@ -10,21 +10,22 @@ public:
   }
   void insert(Type key, Type value) {
     // insert key and value to table
-    void insert(key, value, table, hash);
+    insert(key, value, table, hash, size);
   }
   void remove(Type key) {
     // remove key from table
     remove(key, table, walk, hash, size);
   }
-  List * find(Type key) {
+  void find(Type key, List * & result) {
     // find key and values in table
+    return find(key, table, walk, hash, size, result);
   }
 private:
   unsigned int size;
   List * table;
   Walk * walk;
   Hash * hash;
-  void insert(Type key, Type value, List * & table, Hash * & hash) {
+  void insert(Type key, Type value, List * & table, Hash * & hash, unsigned int size) {
     // insert key and value to table
     unsigned int position = hash->position(key, size);
     if(!table[position]) table[position] = new List(key, value);
@@ -34,5 +35,27 @@ private:
     // remove key from table
     unsigned int position = hash->position(key, size);
     if(!table[position]) return;
+    walk->set_list(table[position]);
+    walk->rewind();
+    Node * item;
+    List * list = new List();
+    while((item = walk->next())) {
+      if(item->key != key) list->insert_right(item->key, item->value);
+    }
+    walk->unset_list();
+    table[position]->make_empty();
+    delete table[position];
+    table[position] = list;
+  }
+  void find(Type key, Node * & table, Walk * & walk, Hash * & hash, unsigned int size, List * & result) {
+    // find key and values in table
+    unsigned int position = hash->position(key, size);
+    if(!table[position]) return;
+    walk->set_list(table[position]);
+    walk->rewind();
+    Node * item;
+    while((item = walk->next())) {
+      if(key == item->key) result->insert_right(item->key, item->value);
+    }
   }
 };
