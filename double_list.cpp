@@ -10,11 +10,11 @@ int main() {
   DoubleList<Node<string>, string> * dlist = new DoubleList<Node<string>, string>();
   DoubleListWalk<Node<string>, DoubleList<Node<string>, string> > * dlwalk = new DoubleListWalk<Node<string>, DoubleList<Node<string>, string> >(dlist);
   Node<string> * item;
-  dlist->add_left("a", "a");
-  dlist->add_left("b", "b");
-  dlist->add_right("c", "c");
-  dlist->add_right("d", "d");
-  dlist->add_right("e", "e");
+  dlist->insert_left("a", "a");
+  dlist->insert_left("b", "b");
+  dlist->insert_right("c", "c");
+  dlist->insert_right("d", "d");
+  dlist->insert_right("e", "e");
   dlwalk->rewind();
   while((item = dlwalk->next())) {
     cout<<item->key;
@@ -27,11 +27,11 @@ int main() {
   }
   // should be bacde
   cout<<endl;
-  dlist->add_left("a", "a");
-  dlist->add_left("b", "b");
-  dlist->add_right("c", "c");
-  dlist->add_right("d", "d");
-  dlist->add_right("e", "e");
+  dlist->insert_left("a", "a");
+  dlist->insert_left("b", "b");
+  dlist->insert_right("c", "c");
+  dlist->insert_right("d", "d");
+  dlist->insert_right("e", "e");
   while((item = dlist->get_tail())) {
     cout<<item->key;
     dlist->pop_right();
