@@ -1,15 +1,15 @@
 #include <iostream>
 #include <string>
-#include "node.h"
+#include "double_node.h"
 #include "double_list.h"
 #include "double_list_walk.h"
 
 using namespace std;
 
 int main() {
-  DoubleList<Node<string>, string> * dlist = new DoubleList<Node<string>, string>();
-  DoubleListWalk<Node<string>, DoubleList<Node<string>, string> > * dlwalk = new DoubleListWalk<Node<string>, DoubleList<Node<string>, string> >(dlist);
-  Node<string> * item;
+  DoubleList<DoubleNode<string>, string> * dlist = new DoubleList<DoubleNode<string>, string>();
+  DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> > * dlwalk = new DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >(dlist);
+  DoubleNode<string> * item;
   dlist->insert_left("a", "a");
   dlist->insert_left("b", "b");
   dlist->insert_right("c", "c");
