@@ -44,6 +44,7 @@ int main() {
   dlist->insert_right("d", "d");
   dlist->insert_right("e", "e");
   delete dlwalk;
+  dlist->make_empty();
   delete dlist;
   return 0;
 }

@@ -2,7 +2,6 @@ template<class Node, typename Type>class DoubleList {
 public:
   DoubleList(Type key, Type value):head(NULL), tail(NULL) {insert_right(key, value);}
   DoubleList():head(NULL), tail(NULL) {}
-  ~DoubleList() {make_empty();}
   void insert_left(Type key, Type value) {
     // insert to the left side of list
     insert_left(key, value, head, tail);

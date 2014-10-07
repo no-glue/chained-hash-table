@@ -1,4 +1,4 @@
-#define SIZE 4294967295
+#define SIZE 65535
 
 #include <iostream>
 #include <string>
@@ -25,8 +25,8 @@ int main() {
   DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
   string
   >(SIZE, walk, hash);
-  delete table;
-  delete hash;
   delete walk;
+  delete hash;
+  delete table;
   return 0;
 }
