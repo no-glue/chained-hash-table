@@ -6,7 +6,7 @@ public:
   }
   ~ChainedHashTable() {
     // delete table
-    delete[] table;
+    make_empty();
   }
   void insert(Type key, Type value) {
     // insert key and value to table
@@ -20,6 +20,7 @@ public:
     // find key and values in table
     find(key, table, walk, hash, size, result);
   }
+  void make_empty() {make_empty(table, size);}
   unsigned int get_size() {return size;}
 private:
   unsigned int size;
@@ -62,5 +63,15 @@ private:
     while((item = walk->next())) {
       if(key == item->key) result->insert_right(item->key, item->value);
     }
+  }
+  void make_empty(List ** & table, unsigned int size) {
+    for(unsigned int i = 0; i < size; i++) {
+      if(table[i]) {
+        table[i]->make_empty();
+        delete table[i];
+        table[i] = NULL;
+      }
+    }
+    delete[] table;
   }
 };
