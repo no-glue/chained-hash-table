@@ -32,11 +32,7 @@ private:
     // todo keep flag to show if there is collision
     unsigned int position = hash->position(key, size);
     if(!table[position]) table[position] = new List(key, value);
-    else {
-      table[position]->insert_right(key, value);
-      Node * head = table[position]->get_head();
-      if(head->check_collision && head->key != key) head->collision = true;
-    }
+    else table[position]->insert_right(key, value);
   }
   void remove(Type key, List ** & table, Walk * & walk, Hash * & hash, unsigned int size) {
     // remove key from table
@@ -61,16 +57,9 @@ private:
     // if flag is false just set result
     unsigned int position = hash->position(key, size);
     if(!table[position]) return;
-    Node * head = table[position]->get_head();
     walk->set_list(table[position]);
     walk->rewind();
     Node * item;
-    if(head && head->check_collision && !head->collision) {
-      while((item = walk->next())) {
-        result->insert_right(item->key, item->value);
-      }
-      return;
-    }
     while((item = walk->next())) {
       if(key == item->key) result->insert_right(item->key, item->value);
     }
