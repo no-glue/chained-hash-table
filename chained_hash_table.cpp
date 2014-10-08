@@ -26,8 +26,13 @@ int main() {
   HashSimpleString<string>,
   DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
   string
-  >(ceil(SIZE / sizeof(DoubleList<DoubleNode<string>, string>)), walk, hash);
+  >(SIZE, walk, hash);
   cout<<"table size: "<<table->get_size()<<endl;
+  table->insert("a", "a");
+  table->insert("b", "b");
+  table->insert("c", "c");
+  table->insert("d", "d");
+  table->insert("e", "e");
   delete walk;
   delete hash;
   delete table;
