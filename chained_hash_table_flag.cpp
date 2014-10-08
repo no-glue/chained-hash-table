@@ -4,7 +4,7 @@
 #include <string>
 #include <math.h>
 #include <iostream>
-#include "double_node.h"
+#include "double_node_flag.h"
 #include "double_list.h"
 #include "double_list_walk.h"
 #include "hash_djb2_string.h"
@@ -13,22 +13,22 @@
 using namespace std;
 
 int main() {
-  DoubleNode<string> * item;
-  DoubleList<DoubleNode<string>, string> * result = new DoubleList<DoubleNode<string>, string>();
-  DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> > * walk = new DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >();
+  DoubleNodeFlag<string> * item;
+  DoubleList<DoubleNodeFlag<string>, string> * result = new DoubleList<DoubleNodeFlag<string>, string>();
+  DoubleListWalk<DoubleNodeFlag<string>, DoubleList<DoubleNodeFlag<string>, string> > * walk = new DoubleListWalk<DoubleNodeFlag<string>, DoubleList<DoubleNodeFlag<string>, string> >();
   HashDjb2String<string> * hash = new HashDjb2String<string>();
   ChainedHashTable<
-  DoubleNode<string>, 
-  DoubleList<DoubleNode<string>, string>, 
+  DoubleNodeFlag<string>, 
+  DoubleList<DoubleNodeFlag<string>, string>, 
   HashDjb2String<string>,
-  DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
+  DoubleListWalk<DoubleNodeFlag<string>, DoubleList<DoubleNodeFlag<string>, string> >,
   string> * table = new ChainedHashTable<
-  DoubleNode<string>, 
-  DoubleList<DoubleNode<string>, string>, 
+  DoubleNodeFlag<string>, 
+  DoubleList<DoubleNodeFlag<string>, string>, 
   HashDjb2String<string>,
-  DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
+  DoubleListWalk<DoubleNodeFlag<string>, DoubleList<DoubleNodeFlag<string>, string> >,
   string
-  >(ceil(SIZE / sizeof(DoubleList<DoubleNode<string>, string>)), walk, hash);
+  >(ceil(SIZE / sizeof(DoubleList<DoubleNodeFlag<string>, string>)), walk, hash);
   cout<<"table size: "<<table->get_size()<<endl;
   table->insert("a", "a");
   table->insert("b", "b");
