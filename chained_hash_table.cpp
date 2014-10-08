@@ -47,6 +47,19 @@ int main() {
   }
   // should be abcde
   cout<<endl;
+  walk->unset_list();
+  result->make_empty();
+  table->remove("a");
+  table->remove("b");
+  table->remove("c");
+  table->remove("d");
+  table->remove("e");
+  table->find("a", result);
+  table->find("b", result);
+  table->find("c", result);
+  table->find("d", result);
+  table->find("e", result);
+  if(!result->get_head()) cout<<"empty"<<endl;
   delete result;
   delete walk;
   delete hash;
