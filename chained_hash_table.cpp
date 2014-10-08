@@ -13,6 +13,8 @@
 using namespace std;
 
 int main() {
+  DoubleNode<string> * item;
+  DoubleList<DoubleNode<string>, string> * result = new DoubleList<DoubleNode<string>, string>();
   DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> > * walk = new DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >();
   HashSimpleString<string> * hash = new HashSimpleString<string>();
   ChainedHashTable<
@@ -26,13 +28,26 @@ int main() {
   HashSimpleString<string>,
   DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
   string
-  >(SIZE, walk, hash);
+  >(ceil(SIZE / sizeof(DoubleList<DoubleNode<string>, string>)), walk, hash);
   cout<<"table size: "<<table->get_size()<<endl;
   table->insert("a", "a");
   table->insert("b", "b");
   table->insert("c", "c");
   table->insert("d", "d");
   table->insert("e", "e");
+  table->find("a", result);
+  table->find("b", result);
+  table->find("c", result);
+  table->find("d", result);
+  table->find("e", result);
+  walk->set_list(result);
+  walk->rewind();
+  while((item = walk->next())) {
+    cout<<item->key;
+  }
+  // should be abcde
+  cout<<endl;
+  delete result;
   delete walk;
   delete hash;
   delete table;
