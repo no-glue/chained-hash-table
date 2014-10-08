@@ -60,6 +60,22 @@ int main() {
   table->find("d", result);
   table->find("e", result);
   if(!result->get_head()) cout<<"empty"<<endl;
+  result->make_empty();
+  table->insert("a", "a");
+  table->insert("b", "b");
+  table->insert("c", "c");
+  table->insert("d", "d");
+  table->insert("e", "e");
+  table->remove("e");
+  table->find("a", result);
+  table->find("e", result);
+  walk->set_list(result);
+  walk->rewind();
+  while((item = walk->next())) {
+    cout<<item->key;
+  }
+  // should be a
+  cout<<endl;
   delete result;
   delete walk;
   delete hash;
