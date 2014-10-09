@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string>
 #include <math.h>
+#include <time.h>
 #include "double_node.h"
 #include "double_list.h"
 #include "double_list_walk.h"
@@ -55,7 +56,10 @@ int main() {
       DecoratorFileRead<ostream, string>, 
       string, 
       ifstream>();
+  time_t now = time(NULL), then;
   importer->import(files, table, file_read);
+  then = time(NULL);
+  cout<<"indexing: "<<difftime(then, now)<<" seconds"<<endl;
   delete walk;
   delete hash;
   delete table;
