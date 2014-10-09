@@ -59,7 +59,7 @@ int main() {
   time_t now = time(NULL), then;
   importer->import(files, table, file_read);
   then = time(NULL);
-  cout<<"indexing: "<<difftime(then, now)<<" seconds"<<endl;
+  cout<<"indexing "<<difftime(then, now)<<" seconds"<<endl;
   delete walk;
   delete hash;
   delete table;
