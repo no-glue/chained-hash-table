@@ -14,29 +14,53 @@
 #include "generator_file.h"
 #include "importer.h"
 #include "adapter_metrics_table.h"
+#include "metrics_table.h"
 
 using namespace std;
 
 int main() {
   string line;
   getline(cin, line);
-  DoubleList<DoubleNode<string>, string> * result = new DoubleList<DoubleNode<string>, string>();
-  DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> > * walk = new DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >();
-  HashDjb2String<string> * hash = new HashDjb2String<string>();
+  DoubleList<
+    DoubleNode<string>, string
+  > * result = new DoubleList<
+    DoubleNode<string>, string
+  >();
+  DoubleListWalk<
+    DoubleNode<string>, 
+    DoubleList<DoubleNode<string>, string>
+  > * walk = new DoubleListWalk<
+    DoubleNode<string>, 
+    DoubleList<DoubleNode<string>, string>
+  >();
+  HashDjb2String<
+    string
+  > * hash = new HashDjb2String<
+    string
+  >();
   ChainedHashTable<
-  DoubleNode<string>, 
-  DoubleList<DoubleNode<string>, string>, 
-  HashDjb2String<string>,
-  DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
-  string> * table = new ChainedHashTable<
-  DoubleNode<string>, 
-  DoubleList<DoubleNode<string>, string>, 
-  HashDjb2String<string>,
-  DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
-  string
+    DoubleNode<string>, 
+    DoubleList<DoubleNode<string>, string>, 
+    HashDjb2String<string>,
+    DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
+    string
+  > * table = new ChainedHashTable<
+    DoubleNode<string>, 
+    DoubleList<DoubleNode<string>, string>, 
+    HashDjb2String<string>,
+    DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
+    string
   >(ceil(SIZE / sizeof(DoubleList<DoubleNode<string>, string>)), walk, hash);
-  GeneratorFile<ifstream, string> * files = new GeneratorFile<ifstream, string>(line);
-  DecoratorFileRead<ostream, string> * file_read = new DecoratorFileRead<ostream, string>(cout);
+  GeneratorFile<
+    ifstream, string
+  > * files = new GeneratorFile<
+    ifstream, string
+  >(line);
+  DecoratorFileRead<
+    ostream, string
+  > * file_read = new DecoratorFileRead<
+    ostream, string
+  >(cout);
   Importer<
     GeneratorFile<ifstream, string>, 
     ChainedHashTable<
@@ -79,10 +103,37 @@ int main() {
       DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
       string>
   >(table, result, walk);
+  MetricsTable<
+    AdapterMetricsTable<
+      string,
+      DoubleList<DoubleNode<string>, string>,
+      DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
+      ChainedHashTable<
+        DoubleNode<string>, 
+        DoubleList<DoubleNode<string>, string>, 
+        HashDjb2String<string>,
+        DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
+        string>
+    >
+  > * metrics = new MetricsTable<
+    AdapterMetricsTable<
+      string,
+      DoubleList<DoubleNode<string>, string>,
+      DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
+      ChainedHashTable<
+        DoubleNode<string>, 
+        DoubleList<DoubleNode<string>, string>, 
+        HashDjb2String<string>,
+        DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
+        string>
+    >
+  >(adapter);
+  // todo make single metrics
   time_t now = time(NULL), then;
   importer->import(files, table, file_read);
   then = time(NULL);
   cout<<"indexing "<<difftime(then, now)<<" seconds"<<endl;
+  cout<<"nodes "<<metrics->nodes()<<endl;
   delete result;
   delete walk;
   delete hash;
@@ -91,5 +142,6 @@ int main() {
   delete file_read;
   delete importer;
   delete adapter;
+  delete metrics;
   return 0;
 }
