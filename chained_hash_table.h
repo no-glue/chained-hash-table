@@ -12,9 +12,9 @@ public:
     // insert key and value to table
     insert(key, value, table, hash, size, inserts);
   }
-  void insert_unique(Type key, Type value) {
+  bool insert_unique(Type key, Type value) {
     // insert unique key and value
-    insert_unique(key, value, table, hash, size, inserts);
+    return insert_unique(key, value, table, hash, size, inserts);
   }
   void remove(Type key) {
     // remove key from table
@@ -41,7 +41,7 @@ private:
     else table[position]->insert_right(key, value);
     inserts++;
   }
-  void insert_unique(Type key, Type value, List ** & table, Hash * & hash, unsigned int size, unsigned int & inserts) {
+  bool insert_unique(Type key, Type value, List ** & table, Hash * & hash, unsigned int size, unsigned int & inserts) {
     // insert unique key to table
     Node * item;
     unsigned int position = hash->position(key, size);
@@ -50,11 +50,12 @@ private:
       walk->set_list(table[position]);
       walk->rewind();
       while((item = walk->next())) {
-        if(!key.compare(item->key)) {walk->unset_list(); return;}
+        if(!key.compare(item->key)) {walk->unset_list(); return false;}
       }
       table[position]->insert_right(key, value);
     }
     inserts++;
+    return true;
   }
   void remove(Type key, List ** & table, Walk * & walk, Hash * & hash, unsigned int size) {
     // remove key from table
