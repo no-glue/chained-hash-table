@@ -13,13 +13,14 @@
 #include "decorator_file_read.h"
 #include "generator_file.h"
 #include "importer.h"
-#include "metrics_table.h"
+#include "adapter_metrics_table.h"
 
 using namespace std;
 
 int main() {
   string line;
   getline(cin, line);
+  DoubleList<DoubleNode<string>, string> * result = new DoubleList<DoubleNode<string>, string>();
   DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> > * walk = new DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >();
   HashDjb2String<string> * hash = new HashDjb2String<string>();
   ChainedHashTable<
@@ -57,17 +58,38 @@ int main() {
       DecoratorFileRead<ostream, string>, 
       string, 
       ifstream>();
-  MetricsTable * metrics = new MetricsTable();
+  AdapterMetricsTable<
+    string,
+    DoubleList<DoubleNode<string>, string>,
+    DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
+    ChainedHashTable<
+      DoubleNode<string>, 
+      DoubleList<DoubleNode<string>, string>, 
+      HashDjb2String<string>,
+      DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
+      string>
+  > * adapter = new AdapterMetricsTable<
+    string,
+    DoubleList<DoubleNode<string>, string>,
+    DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
+    ChainedHashTable<
+      DoubleNode<string>, 
+      DoubleList<DoubleNode<string>, string>, 
+      HashDjb2String<string>,
+      DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
+      string>
+  >(table, result, walk);
   time_t now = time(NULL), then;
   importer->import(files, table, file_read);
   then = time(NULL);
   cout<<"indexing "<<difftime(then, now)<<" seconds"<<endl;
+  delete result;
   delete walk;
   delete hash;
   delete table;
   delete files;
   delete file_read;
   delete importer;
-  delete metrics;
+  delete adapter;
   return 0;
 }

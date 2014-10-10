@@ -1,5 +1,6 @@
-template<class Table, class List, class Walk>class AdapterMetricsTable {
+template<typename Type, class List, class Walk, class Table>class AdapterMetricsTable {
 public:
+  AdapterMetricsTable() {}
   AdapterMetricsTable(Table * & table, List * & result, Walk * & walk):table(table), result(result), walk(walk) {}
   int find_single_int(Type key) {
     // find single item of type int
