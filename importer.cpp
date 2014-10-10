@@ -50,7 +50,7 @@ int main() {
     HashDjb2String<string>,
     DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
     string
-  >(ceil(SIZE / sizeof(DoubleList<DoubleNode<string>, string>)), walk, hash);
+  >(ceil(SIZE / sizeof(DoubleNode<string>)), walk, hash);
   GeneratorFile<
     ifstream, string
   > * files = new GeneratorFile<
@@ -132,6 +132,7 @@ int main() {
   time_t now = time(NULL), then;
   importer->import(files, table, file_read);
   then = time(NULL);
+  cout<<"table size "<<table->get_size()<<endl;
   cout<<"indexing "<<difftime(then, now)<<" seconds"<<endl;
   cout<<"nodes "<<metrics->nodes()<<endl;
   delete result;
