@@ -135,6 +135,9 @@ int main() {
   cout<<"table size "<<table->get_size()<<endl;
   cout<<"indexing "<<difftime(then, now)<<" seconds"<<endl;
   cout<<"nodes "<<metrics->nodes()<<endl;
+  cout<<"edges "<<metrics->edges()<<endl;
+  cout<<"density "<<metrics->density()<<endl;
+  cout<<"average degree "<<metrics->average_degree()<<endl;
   delete result;
   delete walk;
   delete hash;
