@@ -104,6 +104,9 @@ int main() {
       string>
   >(table, result, walk);
   MetricsTable<
+    // start template list
+    DoubleList<DoubleNode<string>, string>,
+    // list to use for q
     AdapterMetricsTable<
       string,
       DoubleList<DoubleNode<string>, string>,
@@ -115,7 +118,11 @@ int main() {
         DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
         string>
     >
+    // adapter for index (table here)
   > * metrics = new MetricsTable<
+    // start template list
+    DoubleList<DoubleNode<string>, string>,
+    // list to use for q
     AdapterMetricsTable<
       string,
       DoubleList<DoubleNode<string>, string>,
@@ -127,6 +134,7 @@ int main() {
         DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
         string>
     >
+    // adapter for index (table here)
   >(adapter);
   // todo make single metrics
   time_t now = time(NULL), then;
@@ -138,6 +146,7 @@ int main() {
   cout<<"edges "<<metrics->edges()<<endl;
   cout<<"density "<<metrics->density()<<endl;
   cout<<"average degree "<<metrics->average_degree()<<endl;
+  cout<<"breadth first search "<<metrics->breadth_first_search()<<endl;
   delete result;
   delete walk;
   delete hash;

@@ -1,4 +1,4 @@
-template<class Adapter>class MetricsTable {
+template<class List, class Adapter>class MetricsTable {
 public:
     MetricsTable() {}
     MetricsTable(Adapter * & adapter): adapter(adapter) {}
@@ -17,6 +17,10 @@ public:
     double average_degree() {
         // average degree
         return average_degree(adapter);
+    }
+    double breadth_first_search() {
+        // breadth first search
+        return breadth_first_search(adapter);
     }
 private:
     Adapter * adapter;
@@ -39,5 +43,13 @@ private:
         double e = (double)edges(adapter);
         double n = (double)nodes(adapter);
         return (2 * e) / n;
+    }
+    double breadth_first_search(Adapter * & adapter) {
+        // breadth first search
+        List * node = new List();
+        List * depth = new List();
+        delete node;
+        delete depth;
+        return 1;
     }
 };
