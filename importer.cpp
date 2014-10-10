@@ -21,11 +21,6 @@ using namespace std;
 int main() {
   string line;
   getline(cin, line);
-  DoubleList<
-    DoubleNode<string>, string
-  > * result = new DoubleList<
-    DoubleNode<string>, string
-  >();
   DoubleListWalk<
     DoubleNode<string>, 
     DoubleList<DoubleNode<string>, string>
@@ -102,7 +97,7 @@ int main() {
       HashDjb2String<string>,
       DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
       string>
-  >(table, result, walk);
+  >(table, walk);
   MetricsTable<
     // start template list
     DoubleList<DoubleNode<string>, string>,
@@ -147,7 +142,6 @@ int main() {
   cout<<"density "<<metrics->density()<<endl;
   cout<<"average degree "<<metrics->average_degree()<<endl;
   cout<<"breadth first search "<<metrics->breadth_first_search()<<endl;
-  delete result;
   delete walk;
   delete hash;
   delete table;

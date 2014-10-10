@@ -8,7 +8,7 @@ public:
     }
     int edges() {
         // get number of edges
-        return nodes(adapter);
+        return edges(adapter);
     }
     double density() {
         // get density
@@ -48,6 +48,7 @@ private:
         // breadth first search
         List * node = new List();
         List * depth = new List();
+        adapter->find_single_int("nodes");
         delete node;
         delete depth;
         return 1;
