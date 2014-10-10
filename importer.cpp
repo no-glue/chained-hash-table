@@ -13,6 +13,7 @@
 #include "decorator_file_read.h"
 #include "generator_file.h"
 #include "importer.h"
+#include "metrics_table.h"
 
 using namespace std;
 
@@ -56,6 +57,7 @@ int main() {
       DecoratorFileRead<ostream, string>, 
       string, 
       ifstream>();
+  MetricsTable * metrics = new MetricsTable();
   time_t now = time(NULL), then;
   importer->import(files, table, file_read);
   then = time(NULL);
@@ -66,5 +68,6 @@ int main() {
   delete files;
   delete file_read;
   delete importer;
+  delete metrics;
   return 0;
 }
