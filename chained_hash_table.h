@@ -1,6 +1,6 @@
 template<class Node, class List, class Hash, class Walk, typename Type>class ChainedHashTable {
 public:
-  ChainedHashTable(unsigned int size, Walk * walk, Hash * hash):size(size), walk(walk), hash(hash) {
+  ChainedHashTable(unsigned int size, Walk * walk, Hash * hash):size(size), walk(walk), hash(hash), inserts(0) {
     // make table
     table = new List*[size];
   }
@@ -10,7 +10,7 @@ public:
   }
   void insert(Type key, Type value) {
     // insert key and value to table
-    insert(key, value, table, hash, size);
+    insert(key, value, table, hash, size, inserts);
   }
   void remove(Type key) {
     // remove key from table
@@ -22,17 +22,20 @@ public:
   }
   void make_empty() {make_empty(table, size);}
   unsigned int get_size() {return size;}
+  unsigned int get_inserts() {return inserts;}
 private:
   unsigned int size;
   List ** table;
   Walk * walk;
   Hash * hash;
-  void insert(Type key, Type value, List ** & table, Hash * & hash, unsigned int size) {
+  unsigned int inserts;
+  void insert(Type key, Type value, List ** & table, Hash * & hash, unsigned int size, unsigned int & inserts) {
     // insert key and value to table
     // todo keep flag to show if there is collision
     unsigned int position = hash->position(key, size);
     if(!table[position]) table[position] = new List(key, value);
     else table[position]->insert_right(key, value);
+    inserts++;
   }
   void remove(Type key, List ** & table, Walk * & walk, Hash * & hash, unsigned int size) {
     // remove key from table
