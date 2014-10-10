@@ -76,6 +76,25 @@ int main() {
   }
   // should be a
   cout<<endl;
+  result->make_empty();
+  table->remove("a");
+  table->remove("b");
+  table->remove("c");
+  table->remove("d");
+  table->remove("e");
+  table->insert_unique("a", "a");
+  table->insert_unique("a", "a");
+  table->insert_unique("a", "a");
+  table->insert_unique("a", "a");
+  table->insert_unique("a", "a");
+  table->find("a", result);
+  walk->set_list(result);
+  walk->rewind();
+  while((item = walk->next())) {
+    cout<<item->key;
+  }
+  // should be a
+  cout<<endl;
   delete result;
   delete walk;
   delete hash;
