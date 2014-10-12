@@ -2,6 +2,26 @@ template<typename Type, class List, class Walk, class Table>class AdapterMetrics
 public:
   AdapterMetricsTable() {}
   AdapterMetricsTable(Table * & table, Walk * & walk):table(table), walk(walk) {}
+  double density() {
+    // density
+    double e = (double)edges();
+    double n = (double)nodes();
+    return (2 * e) / (n * (n - 1));
+  }
+  double average_degree() {
+    // average degree
+    double e = (double)edges();
+    double n = (double)nodes();
+    return (2 * e) / n;
+  }
+  int nodes() {
+    // number of nodes
+    return find_single_int("nodes");
+  }
+  int edges() {
+    // number of edges
+    return find_single_int("edges");
+  }
   int find_single_int(Type key) {
     // find single item of type int
     return find_single_int(key, table, walk);

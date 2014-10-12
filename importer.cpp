@@ -141,7 +141,6 @@ int main() {
   cout<<"edges "<<metrics->edges()<<endl;
   cout<<"density "<<metrics->density()<<endl;
   cout<<"average degree "<<metrics->average_degree()<<endl;
-  cout<<"breadth first search "<<metrics->breadth_first_search()<<endl;
   delete walk;
   delete hash;
   delete table;
