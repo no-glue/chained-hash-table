@@ -22,6 +22,9 @@ public:
     // number of edges
     return find_single_int("edges");
   }
+  double breadth_first_search() {
+    return breadth_first_search(table, walk);
+  }
   int find_single_int(Type key) {
     // find single item of type int
     return find_single_int(key, table, walk);
@@ -39,5 +42,8 @@ private:
     walk->unset_list();
     delete result;
     return item;
+  }
+  double breadth_first_search(Table * & table, Walk * & walk) {
+    return 1;
   }
 };
