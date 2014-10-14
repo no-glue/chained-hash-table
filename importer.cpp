@@ -2,9 +2,10 @@
 
 #include <iostream>
 #include <fstream>
-#include <string>
 #include <math.h>
 #include <time.h>
+#include <stdlib.h>
+#include "string_wrapper.h"
 #include "double_node.h"
 #include "double_list.h"
 #include "double_list_walk.h"
@@ -21,17 +22,27 @@ using namespace std;
 int main() {
   string line;
   getline(cin, line);
+  StringWrapper<int> * str = new StringWrapper<int>();
   DoubleListWalk<
     DoubleNode<string>, 
     DoubleList<DoubleNode<string>, string>
   > * table_walk = new DoubleListWalk<
     DoubleNode<string>, 
     DoubleList<DoubleNode<string>, string>
-  >();
-  DoubleListWalk<
+  >(), 
+  * adapter_walk = new DoubleListWalk<
     DoubleNode<string>, 
     DoubleList<DoubleNode<string>, string>
-  > * adapter_walk = new DoubleListWalk<
+  >(), 
+  * table_visited_walk = new DoubleListWalk<
+    DoubleNode<string>, 
+    DoubleList<DoubleNode<string>, string>
+  >(), 
+  * depth_walk = new DoubleListWalk<
+    DoubleNode<string>, 
+    DoubleList<DoubleNode<string>, string>
+  >(), 
+  * running_walk = new DoubleListWalk<
     DoubleNode<string>, 
     DoubleList<DoubleNode<string>, string>
   >();
@@ -39,7 +50,11 @@ int main() {
     string
   > * hash = new HashDjb2String<
     string
+  >(), 
+  * hash_table_visited = new HashDjb2String<
+    string
   >();
+  // get walks
   ChainedHashTable<
     DoubleNode<string>, 
     DoubleList<DoubleNode<string>, string>, 
@@ -52,17 +67,27 @@ int main() {
     HashDjb2String<string>,
     DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
     string
-  >(ceil(SIZE / sizeof(DoubleNode<string>)), table_walk, hash);
+  >(ceil(SIZE / sizeof(DoubleNode<string>)), table_walk, hash),
+  * table_visited = new ChainedHashTable<
+    DoubleNode<string>, 
+    DoubleList<DoubleNode<string>, string>, 
+    HashDjb2String<string>,
+    DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
+    string
+  >(ceil(SIZE / sizeof(DoubleNode<string>)), table_visited_walk, hash_table_visited);
+  // get tables
   GeneratorFile<
     ifstream, string
   > * files = new GeneratorFile<
     ifstream, string
   >(line);
+  // get file generator
   DecoratorFileRead<
     ostream, string
   > * file_read = new DecoratorFileRead<
     ostream, string
   >(cout);
+  // get file read messages
   Importer<
     GeneratorFile<ifstream, string>, 
     ChainedHashTable<
@@ -84,8 +109,10 @@ int main() {
       DecoratorFileRead<ostream, string>, 
       string, 
       ifstream>();
+  // get file reader
   AdapterMetricsTable<
     string,
+    StringWrapper<int>,
     DoubleNode<string>,
     DoubleList<DoubleNode<string>, string>,
     DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
@@ -97,6 +124,7 @@ int main() {
       string>
   > * adapter = new AdapterMetricsTable<
     string,
+    StringWrapper<int>,
     DoubleNode<string>,
     DoubleList<DoubleNode<string>, string>,
     DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
@@ -106,13 +134,16 @@ int main() {
       HashDjb2String<string>,
       DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
       string>
-  >(table, adapter_walk);
+  >(str, table, adapter_walk, table_visited, depth_walk, running_walk);
+  // get table adapter
+  // todo put walk in front
   MetricsTable<
     // start template list
     DoubleList<DoubleNode<string>, string>,
     // list to use for q
     AdapterMetricsTable<
       string,
+      StringWrapper<int>,
       DoubleNode<string>,
       DoubleList<DoubleNode<string>, string>,
       DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
@@ -130,6 +161,7 @@ int main() {
     // list to use for q
     AdapterMetricsTable<
       string,
+      StringWrapper<int>,
       DoubleNode<string>,
       DoubleList<DoubleNode<string>, string>,
       DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
@@ -142,6 +174,7 @@ int main() {
     >
     // adapter for index (table here)
   >(adapter);
+  // get metrics
   // todo make single metrics
   time_t now = time(NULL), then;
   importer->import(files, table, file_read);
@@ -153,10 +186,16 @@ int main() {
   cout<<"density "<<metrics->density()<<endl;
   cout<<"average degree "<<metrics->average_degree()<<endl;
   cout<<"breadth_first_search "<<metrics->breadth_first_search()<<endl;
+  delete str;
   delete table_walk;
+  delete table_visited_walk;
+  delete depth_walk;
+  delete running_walk;
   delete adapter_walk;
   delete hash;
+  delete hash_table_visited;
   delete table;
+  delete table_visited;
   delete files;
   delete file_read;
   delete importer;
