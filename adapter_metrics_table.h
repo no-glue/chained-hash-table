@@ -72,18 +72,18 @@ private:
       walk->rewind();
     while((current = walk->next())) {
       current_depth = walk_depth->next();
-      // walk_running->unset_list();
+      walk_running->unset_list();
       // todo walk_running
-        // running->make_empty();
-        // table->find(current->value, running);
-        // walk_running->set_list(running);
-        // walk_running->rewind();
-        // while((current_running = walk_running->next())) {
-        //   if(table_visited->insert_unique(current_running->value, current_running->value)) {
-        //     node->insert_right(current_running->value, current_running->value);
-        //     depth->insert_right(wrapper->to_string(atoi(current_depth->value) + 1), wrapper->to_string(atoi(current_depth->value) + 1));
-        //   }
-        // }
+        running->make_empty();
+        table->find(current->value, running);
+        walk_running->set_list(running);
+        walk_running->rewind();
+        while((current_running = walk_running->next())) {
+          if(table_visited->insert_unique(current_running->value, current_running->value)) {
+            walk->get_list()->insert_right(current_running->value, current_running->value);
+            walk_depth->get_list()->insert_right(wrapper->to_string(atoi(current_depth->value) + 1), wrapper->to_string(atoi(current_depth->value) + 1));
+          }
+        }
     }
     walk_running->unset_list();
     delete running;
