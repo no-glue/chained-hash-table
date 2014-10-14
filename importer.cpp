@@ -24,7 +24,14 @@ int main() {
   DoubleListWalk<
     DoubleNode<string>, 
     DoubleList<DoubleNode<string>, string>
-  > * walk = new DoubleListWalk<
+  > * table_walk = new DoubleListWalk<
+    DoubleNode<string>, 
+    DoubleList<DoubleNode<string>, string>
+  >();
+  DoubleListWalk<
+    DoubleNode<string>, 
+    DoubleList<DoubleNode<string>, string>
+  > * adapter_walk = new DoubleListWalk<
     DoubleNode<string>, 
     DoubleList<DoubleNode<string>, string>
   >();
@@ -45,7 +52,7 @@ int main() {
     HashDjb2String<string>,
     DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
     string
-  >(ceil(SIZE / sizeof(DoubleNode<string>)), walk, hash);
+  >(ceil(SIZE / sizeof(DoubleNode<string>)), table_walk, hash);
   GeneratorFile<
     ifstream, string
   > * files = new GeneratorFile<
@@ -79,6 +86,7 @@ int main() {
       ifstream>();
   AdapterMetricsTable<
     string,
+    DoubleNode<string>,
     DoubleList<DoubleNode<string>, string>,
     DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
     ChainedHashTable<
@@ -89,6 +97,7 @@ int main() {
       string>
   > * adapter = new AdapterMetricsTable<
     string,
+    DoubleNode<string>,
     DoubleList<DoubleNode<string>, string>,
     DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
     ChainedHashTable<
@@ -97,13 +106,14 @@ int main() {
       HashDjb2String<string>,
       DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
       string>
-  >(table, walk);
+  >(table, adapter_walk);
   MetricsTable<
     // start template list
     DoubleList<DoubleNode<string>, string>,
     // list to use for q
     AdapterMetricsTable<
       string,
+      DoubleNode<string>,
       DoubleList<DoubleNode<string>, string>,
       DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
       ChainedHashTable<
@@ -120,6 +130,7 @@ int main() {
     // list to use for q
     AdapterMetricsTable<
       string,
+      DoubleNode<string>,
       DoubleList<DoubleNode<string>, string>,
       DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
       ChainedHashTable<
@@ -141,7 +152,9 @@ int main() {
   cout<<"edges "<<metrics->edges()<<endl;
   cout<<"density "<<metrics->density()<<endl;
   cout<<"average degree "<<metrics->average_degree()<<endl;
-  delete walk;
+  cout<<"breadth_first_search "<<metrics->breadth_first_search()<<endl;
+  delete table_walk;
+  delete adapter_walk;
   delete hash;
   delete table;
   delete files;

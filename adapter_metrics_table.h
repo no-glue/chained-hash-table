@@ -1,4 +1,4 @@
-template<typename Type, class List, class Walk, class Table>class AdapterMetricsTable {
+template<typename Type, class Node, class List, class Walk, class Table>class AdapterMetricsTable {
 public:
   AdapterMetricsTable() {}
   AdapterMetricsTable(Table * & table, Walk * & walk):table(table), walk(walk) {}

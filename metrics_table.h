@@ -18,6 +18,9 @@ public:
         // average degree
         return average_degree(adapter);
     }
+    double breadth_first_search() {
+        return breadth_first_search(adapter);
+    }
 private:
     Adapter * adapter;
     int nodes(Adapter * & adapter) {
@@ -35,5 +38,8 @@ private:
     double average_degree(Adapter * & adapter) {
         // average degree
         return adapter->average_degree();
+    }
+    double breadth_first_search(Adapter * & adapter) {
+        return adapter->breadth_first_search();
     }
 };
