@@ -68,7 +68,10 @@ private:
         // todo table_visited
       }
       walk->unset_list();
-    int d;
+    int diameter = 0;
+    double paths = 0;
+    double lengths = 0;
+    double average_path_length = 0;
     while(node->get_head()) {
       walk_running->unset_list();
       // todo walk_running
@@ -78,10 +81,13 @@ private:
         walk_running->rewind();
         while((current_running = walk_running->next())) {
           if(table_visited->insert_unique(current_running->value, current_running->value)) {
+            paths++;
+            lengths += atoi(depth->get_head()->value);
+            average_path_length = lengths / paths;
             node->insert_right(current_running->value, current_running->value);
-            d = atoi(depth->get_head()->value) + 1;
+            diameter = atoi(depth->get_head()->value) + 1;
             wrapper->clear(buffer, BUFFER_SIZE);
-            wrapper->int_to_alpha(buffer, d);
+            wrapper->int_to_alpha(buffer, diameter);
             depth->insert_right(buffer, buffer);
           }
         }
@@ -93,6 +99,6 @@ private:
     delete depth;
     walk->unset_list();
     delete node;
-    return d;
+    return diameter;
   }
 };
