@@ -75,11 +75,11 @@ private:
         while((current_running = walk_running->next())) {
           if(table_visited->insert_unique(current_running->value, current_running->value)) {
             node->insert_right(current_running->value, current_running->value);
-            depth->insert_right(wrapper->to_string(atoi(depth->get_head()->value) + 1), wrapper->to_string(atoi(depth->get_head()->value) + 1));
+            //depth->insert_right(wrapper->to_string(atoi(depth->get_head()->value) + 1), wrapper->to_string(atoi(depth->get_head()->value) + 1));
           }
         }
       node->pop_left();
-      depth->pop_left();
+      //depth->pop_left();
     }
     walk_running->unset_list();
     delete running;
