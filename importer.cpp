@@ -5,7 +5,7 @@
 #include <math.h>
 #include <time.h>
 #include <stdlib.h>
-#include "string_wrapper.h"
+#include "cstring_wrapper.h"
 #include "double_node.h"
 #include "double_list.h"
 #include "double_list_walk.h"
@@ -22,7 +22,7 @@ using namespace std;
 int main() {
   string line;
   getline(cin, line);
-  StringWrapper<int> * str = new StringWrapper<int>();
+  CstringWrapper * str = new CstringWrapper();
   DoubleListWalk<
     DoubleNode<string>, 
     DoubleList<DoubleNode<string>, string>
@@ -108,7 +108,7 @@ int main() {
   // get file reader
   AdapterMetricsTable<
     string,
-    StringWrapper<int>,
+    CstringWrapper,
     DoubleNode<string>,
     DoubleList<DoubleNode<string>, string>,
     DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
@@ -120,7 +120,7 @@ int main() {
       string>
   > * adapter = new AdapterMetricsTable<
     string,
-    StringWrapper<int>,
+    CstringWrapper,
     DoubleNode<string>,
     DoubleList<DoubleNode<string>, string>,
     DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
@@ -139,7 +139,7 @@ int main() {
     // list to use for q
     AdapterMetricsTable<
       string,
-      StringWrapper<int>,
+      CstringWrapper,
       DoubleNode<string>,
       DoubleList<DoubleNode<string>, string>,
       DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
@@ -157,7 +157,7 @@ int main() {
     // list to use for q
     AdapterMetricsTable<
       string,
-      StringWrapper<int>,
+      CstringWrapper,
       DoubleNode<string>,
       DoubleList<DoubleNode<string>, string>,
       DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,

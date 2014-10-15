@@ -1,3 +1,5 @@
+#define BUFFER_SIZE 128
+
 template<typename Type, class Wrapper, class Node, class List, class Walk, class Table>class AdapterMetricsTable {
 public:
   AdapterMetricsTable() {}
@@ -24,7 +26,7 @@ public:
     return find_single_int("edges");
   }
   double breadth_first_search() {
-    return breadth_first_search(wrapper, table, walk, table_visited, walk_running);
+    return breadth_first_search(wrapper, table, walk, table_visited, walk_running, buffer);
   }
   int find_single_int(Type key) {
     // find single item of type int
@@ -36,6 +38,7 @@ private:
   Walk * walk;
   Table * table_visited;
   Walk * walk_running;
+  char buffer[BUFFER_SIZE];
   int find_single_int(Type key, Table * & table, Walk * & walk) {
     // find single item of type int
     List * result = new List();
@@ -47,7 +50,7 @@ private:
     delete result;
     return item;
   }
-  double breadth_first_search(Wrapper * & wrapper, Table * & table, Walk * & walk, Table * & table_visited, Walk * & walk_running) {
+  double breadth_first_search(Wrapper * & wrapper, Table * & table, Walk * & walk, Table * & table_visited, Walk * & walk_running, char * buffer) {
     Node * current;
     Node * current_running;
     List * running = new List();
@@ -65,6 +68,7 @@ private:
         // todo table_visited
       }
       walk->unset_list();
+    int d;
     while(node->get_head()) {
       walk_running->unset_list();
       // todo walk_running
@@ -75,17 +79,20 @@ private:
         while((current_running = walk_running->next())) {
           if(table_visited->insert_unique(current_running->value, current_running->value)) {
             node->insert_right(current_running->value, current_running->value);
-            //depth->insert_right(wrapper->to_string(atoi(depth->get_head()->value) + 1), wrapper->to_string(atoi(depth->get_head()->value) + 1));
+            d = atoi(depth->get_head()->value) + 1;
+            wrapper->clear(buffer, BUFFER_SIZE);
+            wrapper->int_to_alpha(buffer, d);
+            depth->insert_right(buffer, buffer);
           }
         }
       node->pop_left();
-      //depth->pop_left();
+      depth->pop_left();
     }
     walk_running->unset_list();
     delete running;
     delete depth;
     walk->unset_list();
     delete node;
-    return 1;
+    return d;
   }
 };
