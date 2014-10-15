@@ -1,6 +1,6 @@
 #define BUFFER_SIZE 128
-#define BFS(diameter, average_path_lenght, option) return (!option) ? diameter : average_path_length
-
+#define DENSITY (edges, nodes) (2 * edges) / (nodes * (nodes - 1))
+#define AVERAGE_DEGREE (edges, nodes) (2 * edges) / nodes
 template<typename Type, class Wrapper, class Node, class List, class Walk, class Table>class AdapterMetricsTable {
 public:
   AdapterMetricsTable() {}
@@ -12,9 +12,7 @@ public:
   }
   double density() {
     // density
-    double e = (double)edges();
-    double n = (double)nodes();
-    return (2 * e) / (n * (n - 1));
+    return DENSITY(edges(), (double)nodes());
   }
   void collect_average_degree() {
     // add average degree to results
@@ -22,9 +20,7 @@ public:
   }
   double average_degree() {
     // average degree
-    double e = (double)edges();
-    double n = (double)nodes();
-    return (2 * e) / n;
+    return AVERAGE_DEGREE(edges(), (double)nodes());
   }
   void collect_nodes() {
     // add number of nodes to results
@@ -59,13 +55,13 @@ private:
   void collect_density(Wrapper * & wrapper, char * buffer, List * & results) {
     // add density to results
     wrapper->clear(buffer, BUFFER_SIZE);
-    wrapper->float_to_alpha(buffer, density());
+    wrapper->float_to_alpha(buffer, DENSITY(find_single_int("edges"), (double)find_single_int("nodes")));
     results->insert_right("density", buffer);
   }
   void collect_average_degree(Wrapper * & wrapper, char * buffer, List * & results) {
     // add density to results
     wrapper->clear(buffer, BUFFER_SIZE);
-    wrapper->float_to_alpha(buffer, average_degree());
+    wrapper->float_to_alpha(buffer, find_single_int("edges"), (double)find_single_int("nodes"));
     results->insert_right("average_degree", buffer);
   }
   void insert_results(Type key, Table * & table, List * & results) {
