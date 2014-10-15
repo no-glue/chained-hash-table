@@ -26,11 +26,8 @@ public:
     // number of edges
     return find_single_int("edges");
   }
-  float network_diameter() {
-    return breadth_first_search(wrapper, table, walk, table_visited, walk_running, buffer, 0);
-  }
-  float average_path_length() {
-    return breadth_first_search(wrapper, table, walk, table_visited, walk_running, buffer, 1);
+  void breadth_first_search(List * & results) {
+    breadth_first_search(wrapper, table, walk, table_visited, walk_running, buffer, results);
   }
   int find_single_int(Type key) {
     // find single item of type int
@@ -54,15 +51,15 @@ private:
     delete result;
     return item;
   }
-  float breadth_first_search(Wrapper * & wrapper, Table * & table, Walk * & walk, Table * & table_visited, Walk * & walk_running, char * buffer, int option) {
+  void breadth_first_search(Wrapper * & wrapper, Table * & table, Walk * & walk, Table * & table_visited, Walk * & walk_running, char * buffer, List * & results) {
     Node * current;
     Node * current_running;
     List * running = new List();
       table->find("startnode", running);
     List * depth = new List();
-    float paths = 0;
-    float lengths = 0;
-    float average_path_length = 0;
+    double paths = 0;
+    double lengths = 0;
+    double average_path_length = 0;
     List * node = new List();
       table->find(running->get_head()->value, node);
       running->make_empty();
@@ -99,11 +96,14 @@ private:
       node->pop_left();
       depth->pop_left();
     }
+    results->insert_right(buffer, buffer);
+    wrapper->clear(buffer, BUFFER_SIZE);
+    wrapper->float_to_alpha(buffer, average_path_length);
+    results->insert_right(buffer, buffer);
     walk_running->unset_list();
     delete running;
     delete depth;
     walk->unset_list();
     delete node;
-    BFS(diameter, average_path_length, option);
   }
 };

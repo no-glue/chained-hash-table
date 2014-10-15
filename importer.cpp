@@ -23,6 +23,9 @@ int main() {
   string line;
   getline(cin, line);
   CstringWrapper * str = new CstringWrapper();
+  // get str
+  DoubleList<DoubleNode<string>, string> * results = new DoubleList<DoubleNode<string>, string>;
+  // get results
   DoubleListWalk<
     DoubleNode<string>, 
     DoubleList<DoubleNode<string>, string>
@@ -42,6 +45,7 @@ int main() {
     DoubleNode<string>, 
     DoubleList<DoubleNode<string>, string>
   >();
+  // get walks
   HashDjb2String<
     string
   > * hash = new HashDjb2String<
@@ -50,7 +54,7 @@ int main() {
   * hash_table_visited = new HashDjb2String<
     string
   >();
-  // get walks
+  // get hashes
   ChainedHashTable<
     DoubleNode<string>, 
     DoubleList<DoubleNode<string>, string>, 
@@ -182,14 +186,15 @@ int main() {
   cout<<"density "<<metrics->density()<<endl;
   cout<<"average degree "<<metrics->average_degree()<<endl;
   now = time(NULL);
-  cout<<"network diameter "<<metrics->network_diameter()<<endl;
+  metrics->breadth_first_search(results);
+  cout<<"network diameter "<<results->get_head()->value<<endl;
+  results->pop_left();
+  cout<<"average path length "<<results->get_head()->value<<endl;
+  results->pop_left();
   then = time(NULL);
-  cout<<"network diameter "<<difftime(then, now)<<" seconds"<<endl;
-  now = time(NULL);
-  cout<<"average path length "<<metrics->average_path_length()<<endl;
-  then = time(NULL);
-  cout<<"average path length "<<difftime(then, now)<<" seconds"<<endl;
+  cout<<"bfs "<<difftime(then, now)<<" seconds"<<endl;
   delete str;
+  delete results;
   delete table_walk;
   delete table_visited_walk;
   delete running_walk;
