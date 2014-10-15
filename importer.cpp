@@ -182,9 +182,13 @@ int main() {
   cout<<"density "<<metrics->density()<<endl;
   cout<<"average degree "<<metrics->average_degree()<<endl;
   now = time(NULL);
-  cout<<"breadth_first_search "<<metrics->breadth_first_search()<<endl;
+  cout<<"network diameter "<<metrics->network_diameter()<<endl;
   then = time(NULL);
-  cout<<"metrics "<<difftime(then, now)<<" seconds"<<endl;
+  cout<<"network diameter "<<difftime(then, now)<<" seconds"<<endl;
+  now = time(NULL);
+  cout<<"average path length "<<metrics->average_path_length()<<endl;
+  then = time(NULL);
+  cout<<"average path length "<<difftime(then, now)<<" seconds"<<endl;
   delete str;
   delete table_walk;
   delete table_visited_walk;

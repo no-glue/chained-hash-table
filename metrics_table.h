@@ -18,8 +18,13 @@ public:
         // average degree
         return average_degree(adapter);
     }
-    double breadth_first_search() {
-        return breadth_first_search(adapter);
+    double network_diameter() {
+        // network diameter
+        return network_diameter(adapter);
+    }
+    double average_path_length() {
+        // average path length
+        return average_path_length(adapter);
     }
 private:
     Adapter * adapter;
@@ -39,7 +44,12 @@ private:
         // average degree
         return adapter->average_degree();
     }
-    double breadth_first_search(Adapter * & adapter) {
-        return adapter->breadth_first_search();
+    double network_diameter(Adapter * & adapter) {
+        // network diameter
+        return adapter->network_diameter();
+    }
+    double average_path_length(Adapter * & adapter) {
+        // average path length
+        return adapter->average_path_length();
     }
 };

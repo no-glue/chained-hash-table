@@ -1,4 +1,5 @@
 #define BUFFER_SIZE 128
+#define BFS(diameter, average_path_lenght, option) return (!option) ? diameter : average_path_length
 
 template<typename Type, class Wrapper, class Node, class List, class Walk, class Table>class AdapterMetricsTable {
 public:
@@ -25,8 +26,11 @@ public:
     // number of edges
     return find_single_int("edges");
   }
-  double breadth_first_search() {
-    return breadth_first_search(wrapper, table, walk, table_visited, walk_running, buffer);
+  float network_diameter() {
+    return breadth_first_search(wrapper, table, walk, table_visited, walk_running, buffer, 0);
+  }
+  float average_path_length() {
+    return breadth_first_search(wrapper, table, walk, table_visited, walk_running, buffer, 1);
   }
   int find_single_int(Type key) {
     // find single item of type int
@@ -50,12 +54,15 @@ private:
     delete result;
     return item;
   }
-  double breadth_first_search(Wrapper * & wrapper, Table * & table, Walk * & walk, Table * & table_visited, Walk * & walk_running, char * buffer) {
+  float breadth_first_search(Wrapper * & wrapper, Table * & table, Walk * & walk, Table * & table_visited, Walk * & walk_running, char * buffer, int option) {
     Node * current;
     Node * current_running;
     List * running = new List();
       table->find("startnode", running);
     List * depth = new List();
+    float paths = 0;
+    float lengths = 0;
+    float average_path_length = 0;
     List * node = new List();
       table->find(running->get_head()->value, node);
       running->make_empty();
@@ -63,18 +70,16 @@ private:
       walk->rewind();
       table_visited->insert_unique(node->get_head()->key, node->get_head()->key);
       while((current = walk->next())) {
+        paths++;
+        lengths++;
+        average_path_length = lengths / paths;
         depth->insert_right("1", "1");
         table_visited->insert_unique(current->value, current->value);
-        // todo table_visited
       }
       walk->unset_list();
     int diameter = 0;
-    double paths = 0;
-    double lengths = 0;
-    double average_path_length = 0;
     while(node->get_head()) {
       walk_running->unset_list();
-      // todo walk_running
         running->make_empty();
         table->find(node->get_head()->value, running);
         walk_running->set_list(running);
@@ -99,6 +104,6 @@ private:
     delete depth;
     walk->unset_list();
     delete node;
-    return diameter;
+    BFS(diameter, average_path_length, option);
   }
 };
