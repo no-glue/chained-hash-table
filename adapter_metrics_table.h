@@ -6,11 +6,19 @@ public:
   AdapterMetricsTable() {}
   AdapterMetricsTable(Wrapper * & wrapper, Table * & table, Walk * & walk, Table * & table_visited, Walk * & walk_running):
     wrapper(wrapper), table(table), walk(walk), table_visited(table_visited), walk_running(walk_running) {}
+  void collect_density() {
+    // add density to results
+    collect_density(wrapper, buffer, results);
+  }
   double density() {
     // density
     double e = (double)edges();
     double n = (double)nodes();
     return (2 * e) / (n * (n - 1));
+  }
+  void collect_average_degree() {
+    // add average degree to results
+    collect_density(wrapper, buffer, results);
   }
   double average_degree() {
     // average degree
@@ -18,9 +26,17 @@ public:
     double n = (double)nodes();
     return (2 * e) / n;
   }
+  void collect_nodes() {
+    // add number of nodes to results
+    insert_results("nodes", results);
+  }
   int nodes() {
     // number of nodes
     return find_single_int("nodes");
+  }
+  void collect_edges() {
+    // add number of edges to results
+    insert_results("edges", results);
   }
   int edges() {
     // number of edges
@@ -40,6 +56,22 @@ private:
   Table * table_visited;
   Walk * walk_running;
   char buffer[BUFFER_SIZE];
+  void collect_density(Wrapper * & wrapper, char * buffer, List * & results) {
+    // add density to results
+    wrapper->clear(buffer, BUFFER_SIZE);
+    wrapper->float_to_alpha(buffer, density());
+    results->insert_right("density", buffer);
+  }
+  void collect_average_degree(Wrapper * & wrapper, char * buffer, List * & results) {
+    // add density to results
+    wrapper->clear(buffer, BUFFER_SIZE);
+    wrapper->float_to_alpha(buffer, average_degree());
+    results->insert_right("average_degree", buffer);
+  }
+  void insert_results(Type key, Table * & table, List * & results) {
+    // insert to results
+    table->find(key, results);
+  }
   int find_single_int(Type key, Table * & table, Walk * & walk) {
     // find single item of type int
     List * result = new List();
