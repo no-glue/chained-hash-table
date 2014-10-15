@@ -96,10 +96,10 @@ private:
       node->pop_left();
       depth->pop_left();
     }
-    results->insert_right(buffer, buffer);
+    results->insert_right("network diameter", buffer);
     wrapper->clear(buffer, BUFFER_SIZE);
     wrapper->float_to_alpha(buffer, average_path_length);
-    results->insert_right(buffer, buffer);
+    results->insert_right("average path length", buffer);
     walk_running->unset_list();
     delete running;
     delete depth;
