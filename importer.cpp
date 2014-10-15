@@ -38,10 +38,6 @@ int main() {
     DoubleNode<string>, 
     DoubleList<DoubleNode<string>, string>
   >(), 
-  * depth_walk = new DoubleListWalk<
-    DoubleNode<string>, 
-    DoubleList<DoubleNode<string>, string>
-  >(), 
   * running_walk = new DoubleListWalk<
     DoubleNode<string>, 
     DoubleList<DoubleNode<string>, string>
@@ -134,7 +130,7 @@ int main() {
       HashDjb2String<string>,
       DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
       string>
-  >(str, table, adapter_walk, table_visited, depth_walk, running_walk);
+  >(str, table, adapter_walk, table_visited, running_walk);
   // get table adapter
   // todo put walk in front
   MetricsTable<
@@ -189,7 +185,6 @@ int main() {
   delete str;
   delete table_walk;
   delete table_visited_walk;
-  delete depth_walk;
   delete running_walk;
   delete adapter_walk;
   delete hash;
