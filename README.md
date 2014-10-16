@@ -7,4 +7,4 @@ table->insert_unique("key", "value");
 table->find("key", results);
 table->remove("key");
 ```  
-For more details see chained_hash_table.h
+For more details see chained_hash_table.cpp
