@@ -33,15 +33,7 @@ int main() {
     DoubleNode<string>, 
     DoubleList<DoubleNode<string>, string>
   >(), 
-  * adapter_walk = new DoubleListWalk<
-    DoubleNode<string>, 
-    DoubleList<DoubleNode<string>, string>
-  >(), 
   * table_visited_walk = new DoubleListWalk<
-    DoubleNode<string>, 
-    DoubleList<DoubleNode<string>, string>
-  >(), 
-  * running_walk = new DoubleListWalk<
     DoubleNode<string>, 
     DoubleList<DoubleNode<string>, string>
   >();
@@ -112,65 +104,101 @@ int main() {
   // get file reader
   AdapterMetricsTable<
     string,
+    // keys and values simple type
     CstringWrapper,
+    // wrapper to use for strings
     DoubleNode<string>,
+    // node
     DoubleList<DoubleNode<string>, string>,
-    DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
+    // list
+    DoubleListWalk<
+      DoubleNode<string>,
+      DoubleList<DoubleNode<string>, string>
+    >,
+    // walk list
     ChainedHashTable<
       DoubleNode<string>, 
       DoubleList<DoubleNode<string>, string>, 
       HashDjb2String<string>,
       DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
-      string>
+      string
+    >
+    // table 
   > * adapter = new AdapterMetricsTable<
     string,
+    // keys and values simple type
     CstringWrapper,
+    // wrapper to use for strings
     DoubleNode<string>,
+    // node
     DoubleList<DoubleNode<string>, string>,
-    DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
+    // list
+    DoubleListWalk<
+      DoubleNode<string>,
+      DoubleList<DoubleNode<string>, string>
+    >,
+    // walk list
     ChainedHashTable<
       DoubleNode<string>, 
       DoubleList<DoubleNode<string>, string>, 
       HashDjb2String<string>,
       DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
-      string>
-  >(str, table, adapter_walk, table_visited, running_walk);
+      string
+    >
+    // table
+  >(str, table, table_visited, results);
   // get table adapter
   // todo put walk in front
   MetricsTable<
     // start template list
-    DoubleList<DoubleNode<string>, string>,
-    // list to use for q
     AdapterMetricsTable<
       string,
+      // keys and values simple type
       CstringWrapper,
+      // wrapper to use for strings
       DoubleNode<string>,
+      // node
       DoubleList<DoubleNode<string>, string>,
-      DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
+      // list
+      DoubleListWalk<
+        DoubleNode<string>,
+        DoubleList<DoubleNode<string>, string>
+      >,
+      // walk list
       ChainedHashTable<
         DoubleNode<string>, 
         DoubleList<DoubleNode<string>, string>, 
         HashDjb2String<string>,
         DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
-        string>
+        string
+      >
+      // table 
     >
     // adapter for index (table here)
   > * metrics = new MetricsTable<
     // start template list
-    DoubleList<DoubleNode<string>, string>,
-    // list to use for q
     AdapterMetricsTable<
       string,
+      // keys and values simple type
       CstringWrapper,
+      // wrapper to use for strings
       DoubleNode<string>,
+      // node
       DoubleList<DoubleNode<string>, string>,
-      DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
+      // list
+      DoubleListWalk<
+        DoubleNode<string>,
+        DoubleList<DoubleNode<string>, string>
+      >,
+      // walk list
       ChainedHashTable<
         DoubleNode<string>, 
         DoubleList<DoubleNode<string>, string>, 
         HashDjb2String<string>,
         DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
-        string>
+        string
+      >
+      // table 
     >
     // adapter for index (table here)
   >(adapter);
@@ -186,7 +214,7 @@ int main() {
   cout<<"density "<<metrics->density()<<endl;
   cout<<"average degree "<<metrics->average_degree()<<endl;
   now = time(NULL);
-  metrics->breadth_first_search(results);
+  metrics->breadth_first_search();
   cout<<"network diameter "<<results->get_head()->value<<endl;
   results->pop_left();
   cout<<"average path length "<<results->get_head()->value<<endl;
@@ -197,8 +225,6 @@ int main() {
   delete results;
   delete table_walk;
   delete table_visited_walk;
-  delete running_walk;
-  delete adapter_walk;
   delete hash;
   delete hash_table_visited;
   delete table;

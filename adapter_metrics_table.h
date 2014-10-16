@@ -1,10 +1,10 @@
 #define BUFFER_SIZE 128
-#define DENSITY (edges, nodes) (2 * edges) / (nodes * (nodes - 1))
-#define AVERAGE_DEGREE (edges, nodes) (2 * edges) / nodes
+#define DENSITY (e, n) (2 * e) / (n * (n - 1))
+#define AVERAGE_DEGREE (e, n) (2 * e) / n
 template<typename Type, class Wrapper, class Node, class List, class Walk, class Table>class AdapterMetricsTable {
 public:
   AdapterMetricsTable() {}
-  AdapterMetricsTable(Wrapper * & wrapper, Table * & table, Table * & table_visited, Lists * & results):
+  AdapterMetricsTable(Wrapper * & wrapper, Table * & table, Table * & table_visited, List * & results):
     wrapper(wrapper), table(table), table_visited(table_visited), results(results) {}
   void collect_density() {
     // add density to results
@@ -12,7 +12,9 @@ public:
   }
   double density() {
     // density
-    return DENSITY(edges(), (double)nodes());
+    double e = (double) edges();
+    double n = (double) nodes();
+    return DENSITY(e, n);
   }
   void collect_average_degree() {
     // add average degree to results
@@ -20,7 +22,9 @@ public:
   }
   double average_degree() {
     // average degree
-    return AVERAGE_DEGREE(edges(), (double)nodes());
+    double e = (double) edges();
+    double n = (double) nodes();
+    return AVERAGE_DEGREE(e, n);
   }
   void collect_nodes() {
     // add number of nodes to results
@@ -28,7 +32,7 @@ public:
   }
   int nodes() {
     // number of nodes
-    return find_single_int("nodes");
+    return find_single_int("nodes", table);
   }
   void collect_edges() {
     // add number of edges to results
@@ -36,14 +40,14 @@ public:
   }
   int edges() {
     // number of edges
-    return find_single_int("edges");
+    return find_single_int("edges", table);
   }
-  void breadth_first_search(List * & results) {
+  void breadth_first_search() {
     breadth_first_search(wrapper, table, table_visited, buffer, results);
   }
   int find_single_int(Type key) {
     // find single item of type int
-    return find_single_int(key, table, walk);
+    return find_single_int(key, table);
   }
 private:
   Wrapper * wrapper;
@@ -54,27 +58,28 @@ private:
   void collect_density(Wrapper * & wrapper, char * buffer, List * & results) {
     // add density to results
     wrapper->clear(buffer, BUFFER_SIZE);
-    wrapper->float_to_alpha(buffer, DENSITY(find_single_int("edges"), (double)find_single_int("nodes")));
+    double e = (double) find_single_int("edges");
+    double n = (double) find_single_int("nodes");
+    wrapper->float_to_alpha(buffer, DENSITY(e, n));
     results->insert_right("density", buffer);
   }
   void collect_average_degree(Wrapper * & wrapper, char * buffer, List * & results) {
     // add density to results
     wrapper->clear(buffer, BUFFER_SIZE);
-    wrapper->float_to_alpha(buffer, find_single_int("edges"), (double)find_single_int("nodes"));
+    double e = (double) find_single_int("edges");
+    double n = (double) find_single_int("nodes");
+    wrapper->float_to_alpha(buffer, AVERAGE_DEGREE(e, n));
     results->insert_right("average_degree", buffer);
   }
   void insert_results(Type key, Table * & table, List * & results) {
     // insert to results
     table->find(key, results);
   }
-  int find_single_int(Type key, Table * & table, Walk * & walk) {
+  int find_single_int(Type key, Table * & table) {
     // find single item of type int
     List * result = new List();
     table->find(key, result);
-    walk->set_list(result);
-    walk->rewind();
-    int item = atoi(walk->next()->value);
-    walk->unset_list();
+    int item = atoi(result->get_head()->value);
     delete result;
     return item;
   }
