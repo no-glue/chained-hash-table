@@ -10,9 +10,7 @@ public:
   }
   double density() {
     // density
-    double e = (double) edges();
-    double n = (double) nodes();
-    return (2 * e) / (n * (n - 1));
+    return density((double) edges(), (double) nodes());
   }
   void collect_average_degree() {
     // add average degree to results
@@ -20,9 +18,7 @@ public:
   }
   double average_degree() {
     // average degree
-    double e = (double) edges();
-    double n = (double) nodes();
-    return (2 * e) / n;
+    return average_degree((double) edges(), (double) nodes());
   }
   void collect_nodes() {
     // add number of nodes to results
@@ -58,16 +54,24 @@ private:
     wrapper->clear(buffer, BUFFER_SIZE);
     double e = (double) find_single_int("edges");
     double n = (double) find_single_int("nodes");
-    wrapper->float_to_alpha(buffer, density());
+    wrapper->float_to_alpha(buffer, density(e, n));
     results->insert_right("density", buffer);
+  }
+  double density(double edges, double nodes) {
+    // density
+   return (2 * edges) / (nodes * (nodes - 1)); 
   }
   void collect_average_degree(Wrapper * & wrapper, char * buffer, List * & results) {
     // add density to results
     wrapper->clear(buffer, BUFFER_SIZE);
     double e = (double) find_single_int("edges");
     double n = (double) find_single_int("nodes");
-    wrapper->float_to_alpha(buffer, average_degree());
+    wrapper->float_to_alpha(buffer, average_degree(e, n));
     results->insert_right("average_degree", buffer);
+  }
+  double average_degree(double edges, double nodes) {
+    // average degree
+    return (2 * edges) / nodes;
   }
   void insert_results(Type key, Table * & table, List * & results) {
     // insert to results
