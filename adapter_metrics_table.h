@@ -4,8 +4,8 @@
 template<typename Type, class Wrapper, class Node, class List, class Walk, class Table>class AdapterMetricsTable {
 public:
   AdapterMetricsTable() {}
-  AdapterMetricsTable(Wrapper * & wrapper, Table * & table, Walk * & walk, Table * & table_visited, Walk * & walk_running):
-    wrapper(wrapper), table(table), walk(walk), table_visited(table_visited), walk_running(walk_running) {}
+  AdapterMetricsTable(Wrapper * & wrapper, Table * & table, Table * & table_visited, Lists * & results):
+    wrapper(wrapper), table(table), table_visited(table_visited), results(results) {}
   void collect_density() {
     // add density to results
     collect_density(wrapper, buffer, results);
@@ -39,7 +39,7 @@ public:
     return find_single_int("edges");
   }
   void breadth_first_search(List * & results) {
-    breadth_first_search(wrapper, table, walk, table_visited, walk_running, buffer, results);
+    breadth_first_search(wrapper, table, table_visited, buffer, results);
   }
   int find_single_int(Type key) {
     // find single item of type int
@@ -48,9 +48,8 @@ public:
 private:
   Wrapper * wrapper;
   Table * table;
-  Walk * walk;
   Table * table_visited;
-  Walk * walk_running;
+  List * results;
   char buffer[BUFFER_SIZE];
   void collect_density(Wrapper * & wrapper, char * buffer, List * & results) {
     // add density to results
@@ -79,9 +78,10 @@ private:
     delete result;
     return item;
   }
-  void breadth_first_search(Wrapper * & wrapper, Table * & table, Walk * & walk, Table * & table_visited, Walk * & walk_running, char * buffer, List * & results) {
+  void breadth_first_search(Wrapper * & wrapper, Table * & table, Table * & table_visited, char * buffer, List * & results) {
     Node * current;
     Node * current_running;
+    Walk * walk = new Walk();
     List * running = new List();
       table->find("startnode", running);
     List * depth = new List();
@@ -104,12 +104,8 @@ private:
       walk->unset_list();
     int diameter = 0;
     while(node->get_head()) {
-      walk_running->unset_list();
-        running->make_empty();
         table->find(node->get_head()->value, running);
-        walk_running->set_list(running);
-        walk_running->rewind();
-        while((current_running = walk_running->next())) {
+        while((current_running = running->get_head())) {
           if(table_visited->insert_unique(current_running->value, current_running->value)) {
             paths++;
             lengths += atoi(depth->get_head()->value);
@@ -120,6 +116,7 @@ private:
             wrapper->int_to_alpha(buffer, diameter);
             depth->insert_right(buffer, buffer);
           }
+          running->pop_left();
         }
       node->pop_left();
       depth->pop_left();
@@ -128,10 +125,9 @@ private:
     wrapper->clear(buffer, BUFFER_SIZE);
     wrapper->float_to_alpha(buffer, average_path_length);
     results->insert_right("average path length", buffer);
-    walk_running->unset_list();
+    delete walk;
     delete running;
     delete depth;
-    walk->unset_list();
     delete node;
   }
 };
