@@ -207,20 +207,20 @@ int main() {
   time_t now = time(NULL), then;
   importer->import(files, table, file_read);
   then = time(NULL);
-  cout<<"table size "<<table->get_size()<<endl;
-  cout<<"indexing "<<difftime(then, now)<<" seconds"<<endl;
-  cout<<"nodes "<<metrics->nodes()<<endl;
-  cout<<"edges "<<metrics->edges()<<endl;
-  cout<<"density "<<metrics->density()<<endl;
-  cout<<"average degree "<<metrics->average_degree()<<endl;
+  cout<<"indexing time "<<difftime(then, now)<<" seconds"<<endl;
+  metrics->collect_nodes();
+  metrics->collect_edges();
+  metrics->collect_density();
+  metrics->collect_average_degree();
+  while(results->get_head()) {
+    cout<<results->get_head()->key<<" "<<results->get_head()->value<<endl;
+    results->pop_left();
+  }
   now = time(NULL);
   metrics->breadth_first_search();
-  cout<<"network diameter "<<results->get_head()->value<<endl;
-  results->pop_left();
-  cout<<"average path length "<<results->get_head()->value<<endl;
-  results->pop_left();
   then = time(NULL);
-  cout<<"bfs "<<difftime(then, now)<<" seconds"<<endl;
+  cout<<results->get_head()->key<<" "<<results->get_head()->value<<endl;
+  cout<<"bfs time "<<difftime(then, now)<<" seconds"<<endl;
   delete str;
   delete results;
   delete table_walk;

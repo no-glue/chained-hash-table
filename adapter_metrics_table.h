@@ -14,7 +14,7 @@ public:
   }
   void collect_average_degree() {
     // add average degree to results
-    collect_density(wrapper, buffer, results);
+    collect_average_degree(wrapper, buffer, results);
   }
   double average_degree() {
     // average degree
@@ -22,7 +22,7 @@ public:
   }
   void collect_nodes() {
     // add number of nodes to results
-    insert_results("nodes", results);
+    insert_results("nodes", table, results);
   }
   int nodes() {
     // number of nodes
@@ -30,7 +30,7 @@ public:
   }
   void collect_edges() {
     // add number of edges to results
-    insert_results("edges", results);
+    insert_results("edges", table, results);
   }
   int edges() {
     // number of edges
