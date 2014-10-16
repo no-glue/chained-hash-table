@@ -1,6 +1,4 @@
 #define BUFFER_SIZE 128
-#define DENSITY (e, n) (2 * e) / (n * (n - 1))
-#define AVERAGE_DEGREE (e, n) (2 * e) / n
 template<typename Type, class Wrapper, class Node, class List, class Walk, class Table>class AdapterMetricsTable {
 public:
   AdapterMetricsTable() {}
@@ -14,7 +12,7 @@ public:
     // density
     double e = (double) edges();
     double n = (double) nodes();
-    return DENSITY(e, n);
+    return (2 * e) / (n * (n - 1));
   }
   void collect_average_degree() {
     // add average degree to results
@@ -24,7 +22,7 @@ public:
     // average degree
     double e = (double) edges();
     double n = (double) nodes();
-    return AVERAGE_DEGREE(e, n);
+    return (2 * e) / n;
   }
   void collect_nodes() {
     // add number of nodes to results
@@ -60,7 +58,7 @@ private:
     wrapper->clear(buffer, BUFFER_SIZE);
     double e = (double) find_single_int("edges");
     double n = (double) find_single_int("nodes");
-    wrapper->float_to_alpha(buffer, DENSITY(e, n));
+    wrapper->float_to_alpha(buffer, density());
     results->insert_right("density", buffer);
   }
   void collect_average_degree(Wrapper * & wrapper, char * buffer, List * & results) {
@@ -68,7 +66,7 @@ private:
     wrapper->clear(buffer, BUFFER_SIZE);
     double e = (double) find_single_int("edges");
     double n = (double) find_single_int("nodes");
-    wrapper->float_to_alpha(buffer, AVERAGE_DEGREE(e, n));
+    wrapper->float_to_alpha(buffer, average_degree());
     results->insert_right("average_degree", buffer);
   }
   void insert_results(Type key, Table * & table, List * & results) {
