@@ -1,5 +1,5 @@
 #define BUFFER_SIZE 128
-template<typename Type, class Wrapper, class Node, class List, class Walk, class Table>class AdapterMetricsTable {
+template<typename Type, class Wrapper, class Node, class List, class Walk, class Table, class TableVisited>class AdapterMetricsTable {
 public:
   AdapterMetricsTable() {}
   AdapterMetricsTable(Wrapper * & wrapper, Table * & table, Table * & table_visited, List * & results):
@@ -46,7 +46,7 @@ public:
 private:
   Wrapper * wrapper;
   Table * table;
-  Table * table_visited;
+  TableVisited * table_visited;
   List * results;
   char buffer[BUFFER_SIZE];
   void collect_density(Wrapper * & wrapper, char * buffer, List * & results) {
@@ -85,7 +85,7 @@ private:
     delete result;
     return item;
   }
-  void breadth_first_search(Wrapper * & wrapper, Table * & table, Table * & table_visited, char * buffer, List * & results) {
+  void breadth_first_search(Wrapper * & wrapper, Table * & table, TableVisited * & table_visited, char * buffer, List * & results) {
     Node * current;
     Node * current_running;
     Walk * walk = new Walk();

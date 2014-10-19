@@ -122,6 +122,13 @@ int main() {
       HashDjb2String<string>,
       DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
       string
+    >,
+    ChainedHashTable<
+      DoubleNode<string>, 
+      DoubleList<DoubleNode<string>, string>, 
+      HashDjb2String<string>,
+      DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
+      string
     >
     // table 
   > * adapter = new AdapterMetricsTable<
@@ -138,6 +145,13 @@ int main() {
       DoubleList<DoubleNode<string>, string>
     >,
     // walk list
+    ChainedHashTable<
+      DoubleNode<string>, 
+      DoubleList<DoubleNode<string>, string>, 
+      HashDjb2String<string>,
+      DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
+      string
+    >,
     ChainedHashTable<
       DoubleNode<string>, 
       DoubleList<DoubleNode<string>, string>, 
@@ -171,6 +185,13 @@ int main() {
         HashDjb2String<string>,
         DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
         string
+      >,
+      ChainedHashTable<
+        DoubleNode<string>, 
+        DoubleList<DoubleNode<string>, string>, 
+        HashDjb2String<string>,
+        DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
+        string
       >
       // table 
     >
@@ -191,6 +212,13 @@ int main() {
         DoubleList<DoubleNode<string>, string>
       >,
       // walk list
+      ChainedHashTable<
+        DoubleNode<string>, 
+        DoubleList<DoubleNode<string>, string>, 
+        HashDjb2String<string>,
+        DoubleListWalk<DoubleNode<string>, DoubleList<DoubleNode<string>, string> >,
+        string
+      >,
       ChainedHashTable<
         DoubleNode<string>, 
         DoubleList<DoubleNode<string>, string>, 
