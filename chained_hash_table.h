@@ -1,6 +1,6 @@
 template<class Node, class List, class Hash, class Walk, typename Type>class ChainedHashTable {
 public:
-  ChainedHashTable(unsigned int size, Walk * walk, Hash * hash):size(size), walk(walk), hash(hash), inserts(0) {
+  ChainedHashTable(unsigned int size, Walk * walk, Hash * hash):size(size), walk(walk), hash(hash), longest_chain(0) {
     // make table
     table = new List*[size];
   }
@@ -10,11 +10,11 @@ public:
   }
   void insert(Type key, Type value) {
     // insert key and value to table
-    insert(key, value, table, hash, size, inserts);
+    insert(key, value, table, hash, size, longest_chain);
   }
   bool insert_unique(Type key, Type value) {
     // insert unique key and value
-    return insert_unique(key, value, table, hash, size, inserts);
+    return insert_unique(key, value, table, hash, size, longest_chain);
   }
   void remove(Type key) {
     // remove key from table
@@ -26,22 +26,22 @@ public:
   }
   void make_empty() {make_empty(table, size);}
   unsigned int get_size() {return size;}
-  unsigned int get_inserts() {return inserts;}
+  unsigned int get_longest_chain() {return longest_chain;}
 private:
   unsigned int size;
   List ** table;
   Walk * walk;
   Hash * hash;
-  unsigned int inserts;
-  void insert(Type key, Type value, List ** & table, Hash * & hash, unsigned int size, unsigned int & inserts) {
+  unsigned int longest_chain;
+  void insert(Type key, Type value, List ** & table, Hash * & hash, unsigned int size, unsigned int & longest_chain) {
     // insert key and value to table
     // todo keep flag to show if there is collision
     unsigned int position = hash->position(key, size);
     if(!table[position]) table[position] = new List(key, value);
     else table[position]->insert_right(key, value);
-    inserts++;
+    if(table[position]->get_size() > longest_chain) longest_chain = table[position]->get_size();
   }
-  bool insert_unique(Type key, Type value, List ** & table, Hash * & hash, unsigned int size, unsigned int & inserts) {
+  bool insert_unique(Type key, Type value, List ** & table, Hash * & hash, unsigned int size, unsigned int & longest_chain) {
     // insert unique key to table
     Node * item;
     unsigned int position = hash->position(key, size);
@@ -54,7 +54,7 @@ private:
       }
       table[position]->insert_right(key, value);
     }
-    inserts++;
+    if(table[position]->get_size() > longest_chain) longest_chain = table[position]->get_size();
     return true;
   }
   void remove(Type key, List ** & table, Walk * & walk, Hash * & hash, unsigned int size) {

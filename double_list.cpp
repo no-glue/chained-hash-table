@@ -43,6 +43,7 @@ int main() {
   dlist->insert_right("c", "c");
   dlist->insert_right("d", "d");
   dlist->insert_right("e", "e");
+  cout<<"size "<<dlist->get_size()<<endl;
   delete dlwalk;
   dlist->make_empty();
   delete dlist;

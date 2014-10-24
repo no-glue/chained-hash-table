@@ -35,6 +35,7 @@ int main() {
   table->insert("c", "c");
   table->insert("d", "d");
   table->insert("e", "e");
+  cout<<"longest chain: "<<table->get_longest_chain()<<endl;
   table->find("a", result);
   table->find("b", result);
   table->find("c", result);
