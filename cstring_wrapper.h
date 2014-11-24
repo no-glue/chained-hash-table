@@ -13,4 +13,7 @@ public:
   void clear(char * str, int size) {memset(str, '\0', size);}
   char * token(char * str, char * delimiters) {return strtok(str, delimiters);}
   double alpha_to_float(char * str) {return atof(str);}
+  int length(char * str) {return strlen(str);}
+  int ncompare(char * source, char * other, int size) {return strncmp(source, other, size);}
+  char * exists(char * destination, char * source) {return strstr(destination, source);}
 };

@@ -25,7 +25,7 @@ public:
   Node * get_head() {return head;}
   Node * get_tail() {return tail;}
   unsigned int get_size() {return size;}
-private:
+protected:
   Node * head;
   Node * tail;
   unsigned int size;

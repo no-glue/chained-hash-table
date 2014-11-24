@@ -1,5 +1,5 @@
 #include <string.h>
-
+// todo use wrapper here(cstring)
 template<typename Type>class DoubleNode {
 public:
   char * key;
